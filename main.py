@@ -1,3 +1,7 @@
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+from transformers import logging
+
 logging.set_verbosity_error()
 
 model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
