@@ -1,11 +1,8 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
-from transformers import logging
-
 logging.set_verbosity_error()
 
 model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
+step = 0
 
 while True:
     # encode the new user input, add the eos_token and return a tensor in Pytorch
@@ -19,3 +16,5 @@ while True:
 
     # pretty print last output tokens from bot
     print("DialoGPT: {}".format(tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)))
+
+    step += 1
