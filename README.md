@@ -13,4 +13,5 @@
 [DialoGPT-medium](https://huggingface.co/microsoft/DialoGPT-medium)
 
 ### Запуск
-1. Выполнить main.py:
+1. Установить зависимости из requirements.txt
+2. Выполнить main.py:
