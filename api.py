@@ -1,54 +1,51 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+from transformers import logging
+
+logging.set_verbosity_error()
 
 app = FastAPI()
 
 model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
+step = 0
 
-@app.post("/chat")
-async def chat_api(message: Message):
-    user_input = message.content
+# Initialize chat history
+messages = []
+tokens = None
 
-    # Add user message to chat history
-    bot_input_ids = tokenizer.encode(user_input + tokenizer.eos_token, return_tensors='pt')
+@app.get("/")
+def root():
+    return {"message": "Hello World"}
 
-    # Generate a response while limiting the total chat history to 1000 tokens
+# Endpoint для обработки пользовательского ввода
+@app.get("/chat")
+async def chat(input_data):
+    global tokens
+
+    user_input = input_data
+    if not user_input:
+        raise HTTPException(status_code=400, detail="User input is required")
+
+    # Display user message in chat message container
+    messages.append({"role": "user", "content": user_input})
+
+    # encode the new user input, add the eos_token and return a tensor in Pytorch
+    new_user_input_ids = tokenizer.encode(user_input + tokenizer.eos_token, return_tensors='pt')
+
+    # append the new user input tokens to the chat history
+    bot_input_ids = torch.cat([tokens, new_user_input_ids], dim=-1) if tokens is not None else new_user_input_ids
+
+    # generated a response while limiting the total chat history to 1000 tokens,
     chat_history_ids = model.generate(bot_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
 
-    response_content = tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
+    tokens = chat_history_ids
 
-    return {"role": "assistant", "content": response_content}
+    response = tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
+    
+    # Display assistant response in chat message container
+    messages.append({"role": "assistant", "content": response})
 
-class Message(BaseModel):
-    content: str
-
-class Response(BaseModel):
-    role: str
-    content: str
-
-@app.post("/chat")
-async def chat(message: Message):
-    user_input = message.content
-    # Your existing chat processing logic here
-    return {"role": "assistant", "content": "This is a dummy response."}
-
-# Create a Flask app
-flask_app = Flask(__name__)
-run_with_ngrok(flask_app)  # starts ngrok when the app is run
-
-# Define a Flask route
-@flask_app.route("/")
-def home():
-    return "<h1>Running FastAPI on Google Colab with ngrok!</h1>"
-
-app_thread = threading.Thread(target=run_app)
-app_thread.start()
-
-# Allow some time for the FastAPI app to start
-time.sleep(2)
-
-# Run the Flask app with ngrok
-flask_app.run()
+    return JSONResponse(content={"response": response, "messages": messages})
