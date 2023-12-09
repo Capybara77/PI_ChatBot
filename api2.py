@@ -16,8 +16,12 @@ step = 0
 messages = []
 tokens = None
 
+@app.get("/")
+def root():
+    return {"message": "Hello World"}
+
 # Endpoint для обработки пользовательского ввода
-@app.post("/chat")
+@app.get("/chat")
 async def chat(input_data):
     global tokens
 
