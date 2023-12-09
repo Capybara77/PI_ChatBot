@@ -18,10 +18,10 @@ tokens = None
 
 # Endpoint для обработки пользовательского ввода
 @app.post("/chat")
-async def chat(input_data: dict):
+async def chat(input_data):
     global tokens
 
-    user_input = input_data.get("user_input")
+    user_input = input_data
     if not user_input:
         raise HTTPException(status_code=400, detail="User input is required")
 
