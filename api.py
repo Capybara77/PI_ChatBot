@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from transformers import logging
+from fastapi.middleware.cors import CORSMiddleware
 
 logging.set_verbosity_error()
 
