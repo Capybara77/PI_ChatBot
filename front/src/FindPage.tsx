@@ -23,36 +23,39 @@ export const FindPage = observer(() => {
   };
 
   return (
-    <div>
+    <>
       <h1>Программная инженерия</h1>
-      <div>
-        <div>
-          {store.fetchedData && store.fetchedData.messages
-            ? store.fetchedData.messages.map((item) => (
-                <div key={item.content}>
-                  {item.role} - {item.content}
-                </div>
-              ))
-            : ''}
-        </div>
-        {store.isLoading ? <div>Загрузка...</div> : ''}
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder='Введите запрос'
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            ref={(el) => {
-              if (el) el.focus();
-            }}
-          />
-          <button type='button' onClick={handleSearchClick}>
-            Поиск
-          </button>
-          <button type='button' onClick={handleClearClick}>
-            Сброс
-          </button>
-        </form>
+      <div className='chat'>
+        {store.fetchedData && store.fetchedData.messages
+          ? store.fetchedData.messages.map((item) => (
+              <div key={item.content} style={{ marginBottom: '10px', width: '100%' }}>
+                <span
+                  style={{ color: item.role === 'assistant' ? 'violet' : 'pink', fontWeight: 'bold' }}
+                >
+                  {item.role === 'assistant' ? 'Ассистент' : 'Пользователь'}
+                </span>{' '}
+                - <span>{item.content}</span>
+              </div>
+            ))
+          : ''}
       </div>
-    </div>
+      {store.isLoading ? <div>Загрузка...</div> : ''}
+      <form onSubmit={handleSubmit} className='form'>
+        <input
+          placeholder='Введите запрос'
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          ref={(el) => {
+            if (el) el.focus();
+          }}
+        />
+        <button type='button' onClick={handleSearchClick}>
+          Поиск
+        </button>
+        <button type='button' onClick={handleClearClick}>
+          Сброс
+        </button>
+      </form>
+    </>
   );
 });
