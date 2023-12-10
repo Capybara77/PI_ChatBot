@@ -8,6 +8,15 @@ logging.set_verbosity_error()
 
 app = FastAPI()
 
+# Добавляем middleware для обработки CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
 step = 0
