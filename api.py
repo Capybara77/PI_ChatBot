@@ -30,10 +30,13 @@ tokens = None
 def root():
     return {"message": "Hello World"}
 
+# Endpoint для очистки истории чата
 @app.get("/clear")
 def clear():
+    global messages, tokens
     messages = []
     tokens = None
+    return {"message": "Chat history cleared"}
 
 # Endpoint для обработки пользовательского ввода
 @app.get("/chat")
