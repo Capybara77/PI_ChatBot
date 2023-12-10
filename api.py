@@ -30,6 +30,11 @@ tokens = None
 def root():
     return {"message": "Hello World"}
 
+@app.get("/clear")
+def clear():
+    messages = []
+    tokens = None
+
 # Endpoint для обработки пользовательского ввода
 @app.get("/chat")
 async def chat(input_data):
