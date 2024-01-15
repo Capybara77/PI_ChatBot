@@ -12,6 +12,7 @@
 
 ### Модель
 [DialoGPT-medium](https://huggingface.co/microsoft/DialoGPT-medium)
+
 Диалоговая модель DialoGPT-medium представляет собой одну из версий языковой модели GPT (Generative Pre-trained Transformer), разработанной OpenAI. DialoGPT-medium основана на архитектуре GPT-3.5 и предназначена специально для генерации текста в диалоговых форматах.
 
 
