@@ -14,5 +14,11 @@
 [DialoGPT-medium](https://huggingface.co/microsoft/DialoGPT-medium)
 
 ### Запуск
+#### Requirements
 1. Установить зависимости из requirements.txt
-2. Выполнить main.py:
+#### STREAMLIT
+Выполнить ```python3 main.py```
+#### API
+Выполнить ```uvicorn api:app --host 0.0.0.0 --port *port* --reload```
+#### UI (REACT)
+Выполнить ```npm run dev -- --host --port 80```
