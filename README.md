@@ -25,3 +25,7 @@
 Выполнить ```uvicorn api:app --host 0.0.0.0 --port *port* --reload```
 #### UI (REACT)
 Выполнить ```npm run dev -- --host --port 80```
+
+Ссылка на развернутое приложение :
+
+http://84.201.152.12/
