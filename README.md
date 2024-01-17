@@ -1,7 +1,7 @@
 # ChatBot
 Реализация чат-бота для предмета "Программная инженерия"
 
-### Команда
+### Команда проекта
 1. Суетин Андрей (РИМ-130906)
 2. Епик Александр (РИМ-130906)
 3. Лев Лясников  (РИМ-130907)
@@ -13,6 +13,22 @@
 ### Модель
 [DialoGPT-medium](https://huggingface.co/microsoft/DialoGPT-medium)
 
-### Запуск
-1. Установить зависимости из requirements.txt
-2. Выполнить main.py:
+Диалоговая модель DialoGPT-medium представляет собой одну из версий языковой модели GPT (Generative Pre-trained Transformer), разработанной OpenAI. DialoGPT-medium основана на архитектуре GPT-3.5 и предназначена специально для генерации текста в диалоговых форматах.
+
+
+### Запуск ChatBot :
+#### Requirements
+Установить зависимости из requirements.txt
+#### STREAMLIT
+Выполнить ```python3 main.py```
+#### API
+Выполнить ```uvicorn api:app --host 0.0.0.0 --port *port* --reload```
+#### UI (REACT)
+Выполнить ```npm run dev -- --host --port 80```
+
+### Скриншот развернутого приложения:
+![image](https://github.com/Capybara77/PI_ChatBot/assets/70589284/d35942fa-419f-46d9-9bff-5e9bd8880aa1)
+
+### Ссылка на развенутое приложение:
+[demo](http://84.201.152.12/)
+
